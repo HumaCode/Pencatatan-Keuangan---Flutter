@@ -21,7 +21,7 @@ class Session {
   }
 
   // function mengambil data sassion dari user login
-  static Future<User> getUser(User user) async {
+  static Future<User> getUser() async {
     // buat objek user default
     User user = User();
 
