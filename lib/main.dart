@@ -1,3 +1,4 @@
+import 'package:course_money_record/config/app_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,6 +13,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.light().copyWith(
+          primaryColor: AppColor.primary,
+          colorScheme: const ColorScheme.light(
+            primary: AppColor.primary,
+            secondary: AppColor.secondary,
+          ),
+          appBarTheme: const AppBarTheme(
+            backgroundColor: AppColor.primary,
+            foregroundColor: Colors.white,
+          )),
       home: Scaffold(),
     );
   }
