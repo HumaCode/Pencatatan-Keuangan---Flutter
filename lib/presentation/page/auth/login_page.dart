@@ -1,7 +1,11 @@
 import 'package:course_money_record/config/app_asset.dart';
 import 'package:course_money_record/config/app_color.dart';
+import 'package:course_money_record/data/source/source_user.dart';
+import 'package:course_money_record/presentation/page/home_page.dart';
+import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -16,9 +20,29 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
 
   // function login
-  login() {
+  login() async {
     // validasi
-    if (formKey.currentState!.validate()) {}
+    if (formKey.currentState!.validate()) {
+      bool success = await SourceUser.login(
+        controllerEmail.text,
+        controllerPassword.text,
+      );
+
+      // tampilkan dialog
+      if (success) {
+        // ignore: use_build_context_synchronously
+        DInfo.dialogSuccess(context, 'Berhasil login..');
+        // ignore: use_build_context_synchronously
+        DInfo.closeDialog(context, actionAfterClose: () {
+          Get.off(() => const HomePage());
+        });
+      } else {
+        // ignore: use_build_context_synchronously
+        DInfo.dialogError(context, 'Gagal login..');
+        // ignore: use_build_context_synchronously
+        DInfo.closeDialog(context);
+      }
+    }
   }
 
   @override
