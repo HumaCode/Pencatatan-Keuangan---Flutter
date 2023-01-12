@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:course_money_record/data/model/user.dart';
+import 'package:course_money_record/presentation/controller/c_user.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Session {
@@ -16,6 +18,13 @@ class Session {
 
     // masukan kedalam key user, dengan value stringUser
     bool success = await pref.setString('user', stringUser);
+
+    // cek jika success,
+    if (success) {
+      // maka isi controller user dengan data sesi login
+      final cUser = Get.put(CUser());
+      cUser.setData(user); // masukan data user yg login
+    }
 
     return success;
   }
@@ -38,6 +47,10 @@ class Session {
       user = User.fromJson(mapUser);
     }
 
+    // maka isi controller user dengan data sesi login
+    final cUser = Get.put(CUser());
+    cUser.setData(user);
+
     return user;
   }
 
@@ -47,6 +60,10 @@ class Session {
 
     // remove data user
     bool success = await pref.remove('user');
+
+    // hapus isi controller
+    final cUser = Get.put(CUser());
+    cUser.setData(User()); // diisi dengan user kosong / null
 
     return success;
   }
