@@ -270,22 +270,40 @@ class _HomePageState extends State<HomePage> {
           height: MediaQuery.of(context).size.width * 0.5,
           child: Stack(
             children: [
-              DChartPie(
-                data: [
-                  {'domain': 'Flutter', 'measure': 28},
-                  {'domain': 'React Native', 'measure': 27},
-                ],
-                fillColor: (pieData, index) => Colors.purple,
-                donutWidth: 30,
-                labelColor: Colors.white,
+              Obx(
+                () {
+                  return DChartPie(
+                    data: [
+                      {'domain': 'income', 'measure': cHome.monthIncome},
+                      {'domain': 'outcome', 'measure': cHome.monthOutcome},
+                      if (cHome.monthIncome == 0 && cHome.monthOutcome == 0)
+                        {'domain': 'nol', 'measure': 1},
+                    ],
+                    fillColor: (pieData, index) {
+                      switch (pieData['domain']) {
+                        case 'income':
+                          return AppColor.primary;
+                        case 'outcome':
+                          return AppColor.chart;
+                        default:
+                          return AppColor.bg.withOpacity(0.5);
+                      }
+                    },
+                    donutWidth: 20,
+                    labelColor: Colors.transparent,
+                    showLabelLine: false,
+                  );
+                },
               ),
               Center(
-                child: Text(
-                  "60%",
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        color: AppColor.primary,
-                      ),
-                ),
+                child: Obx(() {
+                  return Text(
+                    "${cHome.persentIncome}%",
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                          color: AppColor.primary,
+                        ),
+                  );
+                }),
               ),
             ],
           ),
@@ -318,20 +336,26 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
 
-            DView.spaceHeight(8),
+            DView.spaceHeight(20),
             // keterangan
-            const Text("Pemasukan"),
-            const Text("lebih besar 20%"),
-            const Text("dari pengeluaran"),
-            DView.spaceHeight(8),
+            Obx(
+              () {
+                return Text(cHome.monthPercent);
+              },
+            ),
+            DView.spaceHeight(10),
             const Text("atau setara : "),
-            const Text(
-              "Rp. 20.000,00",
-              style: TextStyle(
-                color: AppColor.primary,
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+            Obx(
+              () {
+                return Text(
+                  AppFormat.currency(cHome.differentMonth.toString()),
+                  style: const TextStyle(
+                    color: AppColor.primary,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                );
+              },
             ),
           ],
         ),
