@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:course_money_record/data/source/source_history.dart';
 import 'package:get/get.dart';
 

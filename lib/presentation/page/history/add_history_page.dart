@@ -1,14 +1,21 @@
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/presentation/controller/history/c_add_history.dart';
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class AddHistoryPage extends StatelessWidget {
   const AddHistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cAddHistory = Get.put(CAddHistory());
+    final controllerName = TextEditingController();
+    final controllerPrice = TextEditingController();
+
     return Scaffold(
       appBar: DView.appBarLeft('Tambah Baru'),
       body: ListView(
@@ -22,10 +29,24 @@ class AddHistoryPage extends StatelessWidget {
           ),
           Row(
             children: [
-              const Text("2023-01-13"),
+              Obx(() {
+                return Text(cAddHistory.date);
+              }),
               DView.spaceWidth(),
               ElevatedButton.icon(
-                onPressed: () {},
+                onPressed: () async {
+                  DateTime? result = await showDatePicker(
+                    context: context,
+                    initialDate: DateTime.now(),
+                    firstDate: DateTime(2023, 01, 01),
+                    lastDate: DateTime(DateTime.now().year + 1),
+                  );
+                  // cek ada atu tidak tanggal yng dipilih
+                  if (result != null) {
+                    cAddHistory
+                        .setDate(DateFormat('yyyy-MM-dd').format(result));
+                  }
+                },
                 icon: const Icon(Icons.event),
                 label: const Text("Pilih"),
               ),
@@ -39,35 +60,55 @@ class AddHistoryPage extends StatelessWidget {
             ),
           ),
           DView.spaceHeight(4),
-          DropdownButtonFormField(
-            value: 'Pemasukan',
-            items: ['Pemasukan', 'Pengeluaran'].map(
-              (e) {
-                return DropdownMenuItem(
-                  value: e,
-                  child: Text(e),
-                );
+          Obx(() {
+            return DropdownButtonFormField(
+              value: cAddHistory.type,
+              items: ['Pemasukan', 'Pengeluaran'].map(
+                (e) {
+                  return DropdownMenuItem(
+                    value: e,
+                    child: Text(e),
+                  );
+                },
+              ).toList(),
+              onChanged: (value) {
+                cAddHistory.setType(value);
               },
-            ).toList(),
-            onChanged: (value) {},
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              isDense: true,
-            ),
-          ),
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                isDense: true,
+              ),
+            );
+          }),
           DView.spaceHeight(),
           DInput(
-            controller: TextEditingController(),
-            hint: 'Jualan',
+            controller: controllerName,
+            hint: 'Masukan Keterangan',
             title: 'Sumber/Objek Pengeluaran',
           ),
           DView.spaceHeight(),
           DInput(
-            controller: TextEditingController(),
-            hint: '3000',
+            controller: controllerPrice,
+            hint: 'Masukan Nominal',
             title: 'Harga',
             inputType: TextInputType.number,
           ),
+          DView.spaceHeight(),
+
+          ElevatedButton(
+            onPressed: () {
+              cAddHistory.addItem({
+                'name': controllerName.text,
+                'price': controllerPrice.text,
+              });
+
+              // setelah di tambahkan ke item, hapus value di controler name dan price
+              controllerName.clear();
+              controllerPrice.clear();
+            },
+            child: const Text("Tambah ke Items"),
+          ),
+
           DView.spaceHeight(),
 
           // divider
@@ -98,15 +139,19 @@ class AddHistoryPage extends StatelessWidget {
                 color: Colors.grey,
               ),
             ),
-            child: Wrap(
-              children: [
-                Chip(
-                  label: Text("Sumber"),
-                  deleteIcon: Icon(Icons.clear),
-                  onDeleted: () {},
-                ),
-              ],
-            ),
+            child: GetBuilder<CAddHistory>(builder: (_) {
+              return Wrap(
+                spacing: 8,
+                runSpacing: 0,
+                children: List.generate(_.items.length, (index) {
+                  return Chip(
+                    label: Text(_.items[index]['name']),
+                    deleteIcon: const Icon(Icons.clear),
+                    onDeleted: () => _.deleteItem(index),
+                  );
+                }),
+              );
+            }),
           ),
 
           DView.spaceHeight(),
@@ -119,16 +164,18 @@ class AddHistoryPage extends StatelessWidget {
                 ),
               ),
               DView.spaceWidth(8),
-              Text(
-                AppFormat.currency('30000'),
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.primary,
-                    ),
-              )
+              Obx(() {
+                return Text(
+                  AppFormat.currency(cAddHistory.total.toString()),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: AppColor.primary,
+                      ),
+                );
+              })
             ],
           ),
-          DView.spaceHeight(100),
+          DView.spaceHeight(50),
           Material(
             color: AppColor.primary,
             borderRadius: BorderRadius.circular(8),
