@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/data/source/source_history.dart';
+import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_add_history.dart';
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
@@ -8,14 +12,34 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class AddHistoryPage extends StatelessWidget {
-  const AddHistoryPage({super.key});
+  AddHistoryPage({super.key});
+
+  final cAddHistory = Get.put(CAddHistory());
+  final cUser = Get.put(CUser());
+  final controllerName = TextEditingController();
+  final controllerPrice = TextEditingController();
+
+  // function add history
+  addHistory() async {
+    bool success = await SourceHistory.add(
+      cUser.data.idUser!,
+      cAddHistory.date,
+      cAddHistory.type,
+      jsonEncode(cAddHistory.items),
+      cAddHistory.total.toString(),
+    );
+
+    // jika success
+    if (success) {
+      // kasih deley dulu
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        Get.back(result: true);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    final cAddHistory = Get.put(CAddHistory());
-    final controllerName = TextEditingController();
-    final controllerPrice = TextEditingController();
-
     return Scaffold(
       appBar: DView.appBarLeft('Tambah Baru'),
       body: ListView(
@@ -181,7 +205,7 @@ class AddHistoryPage extends StatelessWidget {
             borderRadius: BorderRadius.circular(8),
             child: InkWell(
               borderRadius: BorderRadius.circular(8),
-              onTap: () {},
+              onTap: () => addHistory(),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Center(

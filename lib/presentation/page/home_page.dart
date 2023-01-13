@@ -94,58 +94,63 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Expanded(
-            child: ListView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
-              children: [
-                Text(
-                  "Pengeluaran hari ini",
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.bold,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                cHome.getAnalisis(cUser.data.idUser!);
+              },
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 30),
+                children: [
+                  Text(
+                    "Pengeluaran hari ini",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  DView.spaceHeight(),
+
+                  // card pengeluaran hari ini
+                  cardToday(context),
+
+                  DView.spaceHeight(25),
+                  // divider
+                  Center(
+                    child: Container(
+                      height: 5,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        color: AppColor.bg,
+                        borderRadius: BorderRadius.circular(30),
                       ),
-                ),
-                DView.spaceHeight(),
-
-                // card pengeluaran hari ini
-                cardToday(context),
-
-                DView.spaceHeight(25),
-                // divider
-                Center(
-                  child: Container(
-                    height: 5,
-                    width: 80,
-                    decoration: BoxDecoration(
-                      color: AppColor.bg,
-                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                ),
 
-                DView.spaceHeight(25),
+                  DView.spaceHeight(25),
 
-                Text(
-                  "Pengeluaran minggu ini",
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                DView.spaceHeight(),
+                  Text(
+                    "Pengeluaran minggu ini",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  DView.spaceHeight(),
 
-                // chart pengeluaran minggu ini
-                weekly(),
+                  // chart pengeluaran minggu ini
+                  weekly(),
 
-                DView.spaceHeight(30),
+                  DView.spaceHeight(30),
 
-                Text(
-                  "Perbandingan bulan ini",
-                  style: Theme.of(context).textTheme.headline6!.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
-                ),
-                DView.spaceHeight(),
+                  Text(
+                    "Perbandingan bulan ini",
+                    style: Theme.of(context).textTheme.headline6!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                  DView.spaceHeight(),
 
-                monthly(context),
-              ],
+                  monthly(context),
+                ],
+              ),
             ),
           )
         ],
@@ -231,7 +236,7 @@ class _HomePageState extends State<HomePage> {
           // list drawer
           ListTile(
             onTap: () {
-              Get.to(() => const AddHistoryPage())?.then((value) {
+              Get.to(() => AddHistoryPage())?.then((value) {
                 if (value ?? false) {
                   cHome.getAnalisis(cUser.data.idUser!);
                 }
