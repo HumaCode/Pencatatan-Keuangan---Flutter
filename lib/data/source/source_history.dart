@@ -6,7 +6,7 @@ class SourceHistory {
   // function analisis
   static Future<Map> analysis(String idUser) async {
     // url
-    String url = '${Api.history}/login.php';
+    String url = '${Api.history}/analisis.php';
 
     // panggil request post, dibuat dalam bentuk map
     Map? responseBody = await AppRequest.post(url, {
@@ -17,12 +17,12 @@ class SourceHistory {
     // jika responseBody null
     if (responseBody == null) {
       return {
-        'today': 0,
-        'yesterday': 0,
-        'week': [0, 0, 0, 0, 0, 0, 0],
+        'today': 0.0,
+        'yesterday': 0.0,
+        'week': [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
         'month': {
-          'income': 0,
-          'outcome': 0,
+          'income': 0.0,
+          'outcome': 0.0,
         }
       };
     }

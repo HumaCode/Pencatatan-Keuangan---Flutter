@@ -10,10 +10,10 @@ class CHome extends GetxController {
 
   getAnalisis(String idUser) async {
     Map data = await SourceHistory.analysis(idUser);
-    _today.value = data['today'];
+    _today.value = data['today'].toDouble();
 
     // ambil nilai yesterday
-    double yesterday = data['yesterday'];
+    double yesterday = data['yesterday'].toDouble();
     double different = (today - yesterday).abs();
     bool isSame = today.isEqual(yesterday);
     bool isPlus = today.isGreaterThan(yesterday);
