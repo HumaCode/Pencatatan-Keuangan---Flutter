@@ -63,7 +63,46 @@ class SourceHistory {
             'History dengan tanggal tersebut sudah pernah dibuat.!!');
         DInfo.closeDialog();
       } else {
-        DInfo.dialogError('Register Gagal..!!');
+        DInfo.dialogError('Gagal menambahkan data..!!');
+        DInfo.closeDialog();
+      }
+    }
+
+    return responseBody['success'];
+  }
+
+  // function update history
+  static Future<bool> update(String idHistory, String idUser, String date,
+      String type, String details, String total) async {
+    // url
+    String url = '${Api.history}/update.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_history': idHistory,
+      'id_user': idUser,
+      'date': date,
+      'type': type,
+      'details': details,
+      'total': total,
+      'updated_at': DateTime.now().toIso8601String(),
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return false;
+
+    // jika success
+    if (responseBody['success']) {
+      // tampilkan dialog
+      DInfo.dialogSuccess('Berhasil mengubah data history');
+      DInfo.closeDialog();
+    } else {
+      if (responseBody['message'] == 'date') {
+        DInfo.dialogError(
+            'History dengan tanggal tersebut sudah pernah dibuat.!!');
+        DInfo.closeDialog();
+      } else {
+        DInfo.dialogError('Gagal mengubah data..!!');
         DInfo.closeDialog();
       }
     }

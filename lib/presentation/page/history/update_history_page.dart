@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/data/source/source_history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_add_history.dart';
 import 'package:course_money_record/presentation/controller/history/c_update_history.dart';
@@ -10,9 +13,11 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class UpdateHistoryPage extends StatefulWidget {
-  UpdateHistoryPage({super.key, required this.date});
+  const UpdateHistoryPage(
+      {super.key, required this.date, required this.idHistory});
 
   final String date;
+  final String idHistory;
 
   @override
   State<UpdateHistoryPage> createState() => _UpdateHistoryPageState();
@@ -27,21 +32,22 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
 
   // function update history
   updateHistory() async {
-    // bool success = await SourceHistory.add(
-    //   cUser.data.idUser!,
-    //   cUpdateHistory.date,
-    //   cUpdateHistory.type,
-    //   jsonEncode(cUpdateHistory.items),
-    //   cUpdateHistory.total.toString(),
-    // );
+    bool success = await SourceHistory.update(
+      widget.idHistory,
+      cUser.data.idUser!,
+      cUpdateHistory.date,
+      cUpdateHistory.type,
+      jsonEncode(cUpdateHistory.items),
+      cUpdateHistory.total.toString(),
+    );
 
-    // // jika success
-    // if (success) {
-    //   // kasih deley dulu
-    //   Future.delayed(const Duration(milliseconds: 3000), () {
-    //     Get.back(result: true);
-    //   });
-    // }
+    // jika success
+    if (success) {
+      // kasih deley dulu
+      Future.delayed(const Duration(milliseconds: 3000), () {
+        Get.back(result: true);
+      });
+    }
   }
 
   @override
