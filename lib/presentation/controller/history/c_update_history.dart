@@ -1,5 +1,9 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:convert';
+
+import 'package:course_money_record/data/model/history.dart';
+import 'package:course_money_record/data/source/source_history.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -43,5 +47,14 @@ class CUpdateHistory extends GetxController {
     update();
   }
 
-  init() {}
+  // initial data update history
+  init(idUser, date) async {
+    History? history = await SourceHistory.whereDate(idUser, date);
+    if (history != null) {
+      setDate(history.date);
+      setType(history.type);
+      _items.value = jsonDecode(history.details!);
+      count();
+    }
+  }
 }

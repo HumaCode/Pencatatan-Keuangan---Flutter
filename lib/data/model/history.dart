@@ -5,7 +5,7 @@ class History {
     this.type,
     this.date,
     this.total,
-    this.datalist,
+    this.details,
     this.createdAt,
     this.updatedAt,
   });
@@ -15,7 +15,7 @@ class History {
   String? type;
   String? date;
   String? total;
-  String? datalist;
+  String? details;
   String? createdAt;
   String? updatedAt;
 
@@ -25,7 +25,7 @@ class History {
         type: json["type"],
         date: json["date"],
         total: json["total"],
-        datalist: json["datalist"],
+        details: json["details"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
       );
@@ -36,7 +36,7 @@ class History {
         "type": type,
         "date": date,
         "total": total,
-        "datalist": datalist,
+        "details": details,
         "created_at": createdAt,
         "updated_at": updatedAt,
       };

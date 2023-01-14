@@ -118,4 +118,27 @@ class SourceHistory {
 
     return [];
   }
+
+  // function wheredate
+  static Future<History?> whereDate(String idUser, String date) async {
+    // url
+    String url = '${Api.history}/where_date.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'date': date,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return null;
+
+    // cek jika responya success
+    if (responseBody['success']) {
+      var e = responseBody['data'];
+      return History.fromJson(e);
+    }
+
+    return null;
+  }
 }

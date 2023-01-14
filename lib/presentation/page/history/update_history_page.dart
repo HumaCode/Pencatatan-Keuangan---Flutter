@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
-import 'package:course_money_record/data/source/source_history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_add_history.dart';
+import 'package:course_money_record/presentation/controller/history/c_update_history.dart';
 import 'package:d_input/d_input.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,7 @@ class UpdateHistoryPage extends StatefulWidget {
 
 class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
   // inisialisasi controller
-  final cAddHistory = Get.put(CAddHistory());
+  final cUpdateHistory = Get.put(CUpdateHistory());
   final cUser = Get.put(CUser());
   final controllerName = TextEditingController();
   final controllerPrice = TextEditingController();
@@ -31,10 +29,10 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
   updateHistory() async {
     // bool success = await SourceHistory.add(
     //   cUser.data.idUser!,
-    //   cAddHistory.date,
-    //   cAddHistory.type,
-    //   jsonEncode(cAddHistory.items),
-    //   cAddHistory.total.toString(),
+    //   cUpdateHistory.date,
+    //   cUpdateHistory.type,
+    //   jsonEncode(cUpdateHistory.items),
+    //   cUpdateHistory.total.toString(),
     // );
 
     // // jika success
@@ -48,7 +46,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
+    cUpdateHistory.init(cUser.data.idUser, widget.date);
     super.initState();
   }
 
@@ -68,7 +66,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
           Row(
             children: [
               Obx(() {
-                return Text(cAddHistory.date);
+                return Text(cUpdateHistory.date);
               }),
               DView.spaceWidth(),
               ElevatedButton.icon(
@@ -81,7 +79,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                   );
                   // cek ada atu tidak tanggal yng dipilih
                   if (result != null) {
-                    cAddHistory
+                    cUpdateHistory
                         .setDate(DateFormat('yyyy-MM-dd').format(result));
                   }
                 },
@@ -100,7 +98,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
           DView.spaceHeight(4),
           Obx(() {
             return DropdownButtonFormField(
-              value: cAddHistory.type,
+              value: cUpdateHistory.type,
               items: ['Pemasukan', 'Pengeluaran'].map(
                 (e) {
                   return DropdownMenuItem(
@@ -110,7 +108,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                 },
               ).toList(),
               onChanged: (value) {
-                cAddHistory.setType(value);
+                cUpdateHistory.setType(value);
               },
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
@@ -135,7 +133,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
 
           ElevatedButton(
             onPressed: () {
-              cAddHistory.addItem({
+              cUpdateHistory.addItem({
                 'name': controllerName.text,
                 'price': controllerPrice.text,
               });
@@ -177,7 +175,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
                 color: Colors.grey,
               ),
             ),
-            child: GetBuilder<CAddHistory>(builder: (_) {
+            child: GetBuilder<CUpdateHistory>(builder: (_) {
               return Wrap(
                 spacing: 8,
                 runSpacing: 0,
@@ -204,7 +202,7 @@ class _UpdateHistoryPageState extends State<UpdateHistoryPage> {
               DView.spaceWidth(8),
               Obx(() {
                 return Text(
-                  AppFormat.currency(cAddHistory.total.toString()),
+                  AppFormat.currency(cUpdateHistory.total.toString()),
                   style: Theme.of(context).textTheme.headline4!.copyWith(
                         fontWeight: FontWeight.bold,
                         color: AppColor.primary,
