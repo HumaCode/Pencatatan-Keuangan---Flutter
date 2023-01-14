@@ -1,9 +1,11 @@
 import 'package:course_money_record/config/app_asset.dart';
 import 'package:course_money_record/config/app_color.dart';
+import 'package:course_money_record/config/constants.dart';
 import 'package:course_money_record/data/source/source_user.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -50,11 +52,11 @@ class _RegisterPageState extends State<RegisterPage> {
                   Form(
                     key: formKey,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: EdgeInsets.symmetric(horizontal: 30.w),
                       child: Column(
                         children: [
                           Image.asset(AppAsset.logo),
-                          DView.spaceHeight(40),
+                          DView.spaceHeight(40.h),
 
                           // nama
                           TextFormField(
@@ -63,24 +65,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                 value == '' ? 'Nama harus diisi.!!' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+                            style: regular.copyWith(color: Colors.white),
                             keyboardType: TextInputType.text,
                             decoration: InputDecoration(
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Nama',
-                              hintStyle: const TextStyle(color: Colors.white),
+                              hintStyle: regular.copyWith(color: Colors.white),
                               isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
                               ),
                             ),
                           ),
@@ -94,24 +93,21 @@ class _RegisterPageState extends State<RegisterPage> {
                                 value == '' ? 'Email harus diisi.!!' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+                            style: regular.copyWith(color: Colors.white),
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Email',
-                              hintStyle: const TextStyle(color: Colors.white),
+                              hintStyle: regular.copyWith(color: Colors.white),
                               isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
                               ),
                             ),
                           ),
@@ -125,50 +121,46 @@ class _RegisterPageState extends State<RegisterPage> {
                                 value == '' ? 'Password harus diisi.!!' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
+                            style: regular.copyWith(color: Colors.white),
                             keyboardType: TextInputType.text,
                             obscureText: true,
                             decoration: InputDecoration(
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Password',
                               isDense: true,
-                              hintStyle: const TextStyle(color: Colors.white),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
+                              hintStyle: regular.copyWith(color: Colors.white),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
                               ),
                             ),
                           ),
 
-                          DView.spaceHeight(30),
+                          DView.spaceHeight(30.h),
 
                           // Tombol Login
                           SizedBox(
                             width: double.infinity,
                             child: Material(
                               color: AppColor.primary,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(30.r),
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 onTap: () => register(),
-                                child: const Padding(
+                                child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 32, vertical: 16),
+                                      horizontal: 32.w, vertical: 16.h),
                                   child: Center(
                                     child: Text(
                                       'REGISTER',
-                                      style: TextStyle(
+                                      style: bold.copyWith(
                                         color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 18.sp,
                                       ),
                                     ),
                                   ),
@@ -185,24 +177,21 @@ class _RegisterPageState extends State<RegisterPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Sudah punya akun..?',
-                          style: TextStyle(
-                            fontSize: 16,
+                          style: regular.copyWith(
                             color: Colors.black45,
                           ),
                         ),
-                        DView.spaceWidth(4),
+                        DView.spaceWidth(4.w),
                         GestureDetector(
                           onTap: () {
                             Get.back();
                           },
                           child: Text(
                             'Login',
-                            style: TextStyle(
+                            style: bold.copyWith(
                               color: AppColor.primary.withOpacity(0.8),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
                             ),
                           ),
                         )

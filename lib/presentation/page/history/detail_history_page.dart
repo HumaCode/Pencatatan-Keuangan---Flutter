@@ -1,12 +1,13 @@
 import 'dart:convert';
-
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/config/constants.dart';
 import 'package:course_money_record/presentation/controller/history/c_detail_history.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DetailHistoryPage extends StatefulWidget {
   const DetailHistoryPage({
@@ -38,6 +39,7 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
+        titleTextStyle: regular.copyWith(fontSize: 20.sp),
         title: Obx(
           () {
             if (cDetailHitory.data.date == null) return DView.nothing();
@@ -71,34 +73,35 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
               padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
               child: Text(
                 "Total",
-                style: TextStyle(
+                style: bold.copyWith(
                   color: AppColor.primary.withOpacity(0.6),
                   fontWeight: FontWeight.bold,
-                  fontSize: 20,
+                  fontSize: 20.sp,
                 ),
               ),
             ),
-            DView.spaceHeight(8),
+            DView.spaceHeight(8.h),
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 20),
               child: Text(
                 AppFormat.currency(_.data.total!),
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      color: AppColor.primary,
-                    ),
+                style: regular.copyWith(
+                  color: AppColor.primary,
+                  fontSize: 30.sp,
+                ),
               ),
             ),
             Center(
               child: Container(
-                height: 5,
-                width: 100,
+                height: 5.h,
+                width: 100.w,
                 decoration: BoxDecoration(
                   color: AppColor.bg,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(30.r),
                 ),
               ),
             ),
-            DView.spaceHeight(20),
+            DView.spaceHeight(20.h),
 
             // list
             Expanded(
@@ -115,28 +118,29 @@ class _DetailHistoryPageState extends State<DetailHistoryPage> {
                   Map item = details[index];
 
                   return Padding(
-                    padding: const EdgeInsets.all(16),
+                    padding: EdgeInsets.all(16.w),
                     child: Row(
                       children: [
                         Text(
                           '${index + 1}.',
-                          style: const TextStyle(
-                            fontSize: 20,
+                          style: regular.copyWith(
+                            fontSize: 20.sp,
                           ),
                         ),
-                        DView.spaceWidth(8),
+                        DView.spaceWidth(8.w),
                         // ignore: prefer_const_constructors
                         Expanded(
-                            child: Text(
-                          item['name'],
-                          style: const TextStyle(
-                            fontSize: 20,
+                          child: Text(
+                            item['name'],
+                            style: regular.copyWith(
+                              fontSize: 20.sp,
+                            ),
                           ),
-                        )),
+                        ),
                         Text(
                           AppFormat.currency(item['price']),
-                          style: const TextStyle(
-                            fontSize: 20,
+                          style: regular.copyWith(
+                            fontSize: 20.sp,
                           ),
                         ),
                       ],

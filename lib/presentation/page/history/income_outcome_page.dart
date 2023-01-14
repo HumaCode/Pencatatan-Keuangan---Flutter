@@ -1,5 +1,6 @@
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/config/constants.dart';
 import 'package:course_money_record/data/model/history.dart';
 import 'package:course_money_record/data/source/source_history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
@@ -11,6 +12,7 @@ import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class IncomeOutcomePage extends StatefulWidget {
   const IncomeOutcomePage({super.key, required this.type});
@@ -71,11 +73,14 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
         titleSpacing: 0,
         title: Row(
           children: [
-            Text(widget.type),
+            Text(
+              widget.type,
+              style: regular.copyWith(fontSize: 20.sp),
+            ),
             Expanded(
               child: Container(
-                height: 40,
-                margin: const EdgeInsets.all(16),
+                height: 40.w,
+                margin: EdgeInsets.all(16.w),
                 child: TextField(
                   controller: controllerSearch,
                   onTap: () async {
@@ -93,7 +98,7 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                   },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
+                      borderRadius: BorderRadius.circular(30.r),
                       borderSide: BorderSide.none,
                     ),
                     filled: true,
@@ -112,13 +117,14 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                       ),
                     ),
                     isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
+                    contentPadding: EdgeInsets.symmetric(
                       vertical: 0,
-                      horizontal: 16,
+                      horizontal: 16.w,
                     ),
                     hintText: DateFormat('yyyy-MM-dd', 'id_ID')
                         .format(DateTime.now()),
-                    hintStyle: const TextStyle(color: Colors.white),
+                    hintStyle:
+                        regular.copyWith(color: Colors.white, fontSize: 14.sp),
                   ),
                   textAlignVertical: TextAlignVertical.center,
                   style: const TextStyle(
@@ -159,25 +165,21 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                           type: history.type!,
                         ));
                   },
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(4.r),
                   child: Row(
                     children: [
                       DView.spaceWidth(),
                       Text(
                         AppFormat.date(history.date!),
-                        style: const TextStyle(
+                        style: bold.copyWith(
                           color: AppColor.primary,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
                         ),
                       ),
                       Expanded(
                         child: Text(
                           AppFormat.currency(history.total!),
-                          style: const TextStyle(
+                          style: bold.copyWith(
                             color: AppColor.primary,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
                           ),
                           textAlign: TextAlign.end,
                         ),
@@ -185,9 +187,22 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
 
                       // popup button
                       PopupMenuButton<String>(
-                        itemBuilder: (context) => const [
-                          PopupMenuItem(value: "update", child: Text("Update")),
-                          PopupMenuItem(value: "delete", child: Text("Delete")),
+                        itemBuilder: (context) => [
+                          PopupMenuItem(
+                            value: "update",
+                            textStyle: regular.copyWith(
+                              color: Colors.black,
+                              fontSize: 15.sp,
+                            ),
+                            child: const Text("Update"),
+                          ),
+                          PopupMenuItem(
+                              value: "delete",
+                              textStyle: regular.copyWith(
+                                color: Colors.black,
+                                fontSize: 15.sp,
+                              ),
+                              child: const Text("Delete")),
                         ],
                         onSelected: (value) => menuOption(value, history),
                       )

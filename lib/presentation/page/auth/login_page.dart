@@ -1,5 +1,6 @@
 import 'package:course_money_record/config/app_asset.dart';
 import 'package:course_money_record/config/app_color.dart';
+import 'package:course_money_record/config/constants.dart';
 import 'package:course_money_record/data/source/source_user.dart';
 import 'package:course_money_record/presentation/page/auth/register_page.dart';
 import 'package:course_money_record/presentation/page/home_page.dart';
@@ -7,6 +8,7 @@ import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -66,11 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                   Form(
                     key: formKey,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      padding: EdgeInsets.symmetric(horizontal: 30.w),
                       child: Column(
                         children: [
                           Image.asset(AppAsset.logo),
-                          DView.spaceHeight(40),
+                          DView.spaceHeight(40.h),
 
                           // email
                           TextFormField(
@@ -79,8 +81,8 @@ class _LoginPageState extends State<LoginPage> {
                                 value == '' ? 'Email harus diisi.!!' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: TextStyle(
+                              fontSize: 16.sp,
                               color: Colors.white,
                             ),
                             keyboardType: TextInputType.emailAddress,
@@ -88,15 +90,15 @@ class _LoginPageState extends State<LoginPage> {
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Email',
-                              hintStyle: const TextStyle(color: Colors.white),
+                              hintStyle: regular.copyWith(color: Colors.white),
                               isDense: true,
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
                               ),
                             ),
                           ),
@@ -110,8 +112,8 @@ class _LoginPageState extends State<LoginPage> {
                                 value == '' ? 'Password harus diisi.!!' : null,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
-                            style: const TextStyle(
-                              fontSize: 16,
+                            style: TextStyle(
+                              fontSize: 16.sp,
                               color: Colors.white,
                             ),
                             keyboardType: TextInputType.text,
@@ -120,40 +122,39 @@ class _LoginPageState extends State<LoginPage> {
                               fillColor: AppColor.primary.withOpacity(0.5),
                               filled: true,
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Password',
                               isDense: true,
-                              hintStyle: const TextStyle(color: Colors.white),
-                              contentPadding: const EdgeInsets.symmetric(
-                                horizontal: 20,
-                                vertical: 16,
+                              hintStyle: regular.copyWith(color: Colors.white),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 16.h,
                               ),
                             ),
                           ),
 
-                          DView.spaceHeight(30),
+                          DView.spaceHeight(30.h),
 
                           // Tombol Login
                           SizedBox(
                             width: double.infinity,
                             child: Material(
                               color: AppColor.primary,
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(30.r),
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(30),
+                                borderRadius: BorderRadius.circular(30.r),
                                 onTap: () => login(),
-                                child: const Padding(
+                                child: Padding(
                                   padding: EdgeInsets.symmetric(
-                                      horizontal: 32, vertical: 16),
+                                      horizontal: 32.w, vertical: 16.h),
                                   child: Center(
                                     child: Text(
                                       'LOGIN',
-                                      style: TextStyle(
+                                      style: bold.copyWith(
                                         color: Colors.white,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
+                                        fontSize: 20.sp,
                                       ),
                                     ),
                                   ),
@@ -170,24 +171,22 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Belum punya akun..?',
-                          style: TextStyle(
-                            fontSize: 16,
+                          style: regular.copyWith(
                             color: Colors.black45,
                           ),
                         ),
-                        DView.spaceWidth(4),
+                        DView.spaceWidth(4.w),
                         GestureDetector(
                           onTap: () {
                             Get.to(() => const RegisterPage());
                           },
                           child: Text(
                             'Register',
-                            style: TextStyle(
+                            style: bold.copyWith(
                               color: AppColor.primary.withOpacity(0.8),
                               fontWeight: FontWeight.bold,
-                              fontSize: 16,
                             ),
                           ),
                         )

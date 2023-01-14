@@ -1,6 +1,7 @@
 import 'package:course_money_record/config/app_asset.dart';
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/config/constants.dart';
 import 'package:course_money_record/config/session.dart';
 import 'package:course_money_record/presentation/controller/c_home.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
@@ -14,6 +15,7 @@ import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,20 +53,18 @@ class _HomePageState extends State<HomePage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         'Hi,',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                        style: bold.copyWith(
+                          fontSize: 20.sp,
                         ),
                       ),
                       Obx(
                         () {
                           return Text(
                             cUser.data.name ?? '',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18,
+                            style: bold.copyWith(
+                              fontSize: 18.sp,
                               color: Colors.black54,
                             ),
                           );
@@ -75,25 +75,27 @@ class _HomePageState extends State<HomePage> {
                 ),
 
                 // tombol
-                Builder(builder: (ctx) {
-                  return Material(
-                    color: AppColor.chart,
-                    borderRadius: BorderRadius.circular(4),
-                    child: InkWell(
-                      onTap: () {
-                        Scaffold.of(ctx).openEndDrawer();
-                      },
-                      borderRadius: BorderRadius.circular(4),
-                      child: const Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Icon(
-                          Icons.menu,
-                          color: AppColor.primary,
+                Builder(
+                  builder: (ctx) {
+                    return Material(
+                      color: AppColor.chart,
+                      borderRadius: BorderRadius.circular(4.r),
+                      child: InkWell(
+                        onTap: () {
+                          Scaffold.of(ctx).openEndDrawer();
+                        },
+                        borderRadius: BorderRadius.circular(4.r),
+                        child: Padding(
+                          padding: EdgeInsets.all(10.w),
+                          child: const Icon(
+                            Icons.menu,
+                            color: AppColor.primary,
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  },
+                ),
               ],
             ),
           ),
@@ -107,48 +109,48 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     "Pengeluaran hari ini",
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: bold.copyWith(
+                      fontSize: 20.sp,
+                    ),
                   ),
                   DView.spaceHeight(),
 
                   // card pengeluaran hari ini
                   cardToday(context),
 
-                  DView.spaceHeight(25),
+                  DView.spaceHeight(25.h),
                   // divider
                   Center(
                     child: Container(
-                      height: 5,
-                      width: 80,
+                      height: 5.h,
+                      width: 80.w,
                       decoration: BoxDecoration(
                         color: AppColor.bg,
-                        borderRadius: BorderRadius.circular(30),
+                        borderRadius: BorderRadius.circular(30.r),
                       ),
                     ),
                   ),
 
-                  DView.spaceHeight(25),
+                  DView.spaceHeight(25.h),
 
                   Text(
                     "Pengeluaran minggu ini",
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: bold.copyWith(
+                      fontSize: 20.sp,
+                    ),
                   ),
                   DView.spaceHeight(),
 
                   // chart pengeluaran minggu ini
                   weekly(),
 
-                  DView.spaceHeight(30),
+                  DView.spaceHeight(30.h),
 
                   Text(
                     "Perbandingan bulan ini",
-                    style: Theme.of(context).textTheme.headline6!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                    style: bold.copyWith(
+                      fontSize: 20.sp,
+                    ),
                   ),
                   DView.spaceHeight(),
 
@@ -181,10 +183,9 @@ class _HomePageState extends State<HomePage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Hi,',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                            style: bold.copyWith(
                               fontSize: 20,
                             ),
                           ),
@@ -192,8 +193,7 @@ class _HomePageState extends State<HomePage> {
                             () {
                               return Text(
                                 cUser.data.email ?? '',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                style: bold.copyWith(
                                   fontSize: 18,
                                   color: Colors.black54,
                                 ),
@@ -209,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                 // tombol logout
                 Material(
                   color: AppColor.primary,
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(30.r),
                   child: InkWell(
                     onTap: () {
                       // hapus session /logout
@@ -218,16 +218,14 @@ class _HomePageState extends State<HomePage> {
                       // arahkan ke login page
                       Get.off(() => const LoginPage());
                     },
-                    borderRadius: BorderRadius.circular(30),
-                    child: const Padding(
+                    borderRadius: BorderRadius.circular(30.r),
+                    child: Padding(
                       padding:
-                          EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-                      child: const Text(
+                          EdgeInsets.symmetric(horizontal: 24.w, vertical: 8.h),
+                      child: Text(
                         "Logout",
-                        style: TextStyle(
+                        style: bold.copyWith(
                           color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
                         ),
                       ),
                     ),
@@ -248,7 +246,10 @@ class _HomePageState extends State<HomePage> {
             },
             leading: const Icon(Icons.add),
             horizontalTitleGap: 0,
-            title: const Text("Tambah Baru"),
+            title: Text(
+              "Tambah Baru",
+              style: regular.copyWith(fontSize: 15),
+            ),
             trailing: const Icon(Icons.navigate_next),
           ),
           const Divider(height: 1),
@@ -258,7 +259,10 @@ class _HomePageState extends State<HomePage> {
             },
             leading: const Icon(Icons.south_west),
             horizontalTitleGap: 0,
-            title: const Text("Pemasukan"),
+            title: Text(
+              "Pemasukan",
+              style: regular.copyWith(fontSize: 15),
+            ),
             trailing: const Icon(Icons.navigate_next),
           ),
           const Divider(height: 1),
@@ -268,7 +272,10 @@ class _HomePageState extends State<HomePage> {
             },
             leading: const Icon(Icons.south_east),
             horizontalTitleGap: 0,
-            title: const Text("Pengeluaran"),
+            title: Text(
+              "Pengeluaran",
+              style: regular.copyWith(fontSize: 15),
+            ),
             trailing: const Icon(Icons.navigate_next),
           ),
           const Divider(height: 1),
@@ -278,7 +285,10 @@ class _HomePageState extends State<HomePage> {
             },
             leading: const Icon(Icons.history),
             horizontalTitleGap: 0,
-            title: const Text("Riwayat"),
+            title: Text(
+              "Riwayat",
+              style: regular.copyWith(fontSize: 15),
+            ),
             trailing: const Icon(Icons.navigate_next),
           ),
           const Divider(height: 1),
@@ -322,14 +332,17 @@ class _HomePageState extends State<HomePage> {
                 },
               ),
               Center(
-                child: Obx(() {
-                  return Text(
-                    "${cHome.percentIncome}%",
-                    style: Theme.of(context).textTheme.headline4!.copyWith(
-                          color: AppColor.primary,
-                        ),
-                  );
-                }),
+                child: Obx(
+                  () {
+                    return Text(
+                      "${cHome.percentIncome}%",
+                      style: regular.copyWith(
+                        color: AppColor.primary,
+                        fontSize: 30.sp,
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -341,24 +354,27 @@ class _HomePageState extends State<HomePage> {
             Row(
               children: [
                 Container(
-                  height: 16,
-                  width: 16,
+                  height: 16.w,
+                  width: 16.w,
                   color: AppColor.primary,
                 ),
-                DView.spaceWidth(8),
-                const Text("Pemasukan"),
+                DView.spaceWidth(8.w),
+                Text(
+                  "Pemasukan",
+                  style: regular.copyWith(fontSize: 15),
+                ),
               ],
             ),
-            DView.spaceHeight(8),
+            DView.spaceHeight(8.w),
             Row(
               children: [
                 Container(
-                  height: 16,
-                  width: 16,
+                  height: 16.w,
+                  width: 16.w,
                   color: AppColor.chart,
                 ),
-                DView.spaceWidth(8),
-                const Text("Pengeluaran"),
+                DView.spaceWidth(8.w),
+                Text("Pengeluaran", style: regular.copyWith(fontSize: 15)),
               ],
             ),
 
@@ -366,19 +382,20 @@ class _HomePageState extends State<HomePage> {
             // keterangan
             Obx(
               () {
-                return Text(cHome.monthPercent);
+                return Text(
+                  cHome.monthPercent,
+                  style: regular.copyWith(fontSize: 13),
+                );
               },
             ),
             DView.spaceHeight(10),
-            const Text("atau setara : "),
+            Text("atau setara : ", style: regular.copyWith(fontSize: 13)),
             Obx(
               () {
                 return Text(
                   AppFormat.currency(cHome.differentMonth.toString()),
-                  style: const TextStyle(
+                  style: bold.copyWith(
                     color: AppColor.primary,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
                   ),
                 );
               },
@@ -423,7 +440,7 @@ class _HomePageState extends State<HomePage> {
 
   Material cardToday(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       elevation: 4,
       color: AppColor.primary,
       child: Column(
@@ -434,51 +451,54 @@ class _HomePageState extends State<HomePage> {
             child: Obx(() {
               return Text(
                 AppFormat.currency(cHome.today.toString()),
-                style: Theme.of(context).textTheme.headline4!.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: AppColor.secondary,
-                    ),
+                style: bold.copyWith(
+                  fontSize: 30.sp,
+                  color: AppColor.secondary,
+                ),
               );
             }),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 0, 16, 30),
-            child: Obx(() {
-              return Text(
-                cHome.todayPercent,
-                style: const TextStyle(
-                  color: AppColor.bg,
-                  fontSize: 16,
-                ),
-              );
-            }),
+            child: Obx(
+              () {
+                return Text(
+                  cHome.todayPercent,
+                  style: regular.copyWith(
+                    color: AppColor.bg,
+                  ),
+                );
+              },
+            ),
           ),
           GestureDetector(
             onTap: () {
-              Get.to(() => DetailHistoryPage(
-                    idUser: cUser.data.idUser!,
-                    date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-                    type: 'Pengeluaran',
-                  ));
+              Get.to(
+                () => DetailHistoryPage(
+                  idUser: cUser.data.idUser!,
+                  date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                  type: 'Pengeluaran',
+                ),
+              );
             },
             child: Container(
               margin: const EdgeInsets.fromLTRB(16, 0, 0, 16),
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              decoration: const BoxDecoration(
+              padding: EdgeInsets.symmetric(vertical: 6.h),
+              decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  bottomLeft: Radius.circular(8),
+                  topLeft: Radius.circular(8.r),
+                  bottomLeft: Radius.circular(8.r),
                 ),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
+                children: [
                   Text(
                     "Selengkapnya",
-                    style: TextStyle(color: AppColor.primary),
+                    style: regular.copyWith(color: AppColor.primary),
                   ),
-                  Icon(
+                  const Icon(
                     Icons.navigate_next,
                     color: AppColor.primary,
                   )

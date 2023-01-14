@@ -1,5 +1,6 @@
 import 'dart:convert';
-
+import 'package:course_money_record/config/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
 import 'package:course_money_record/data/source/source_history.dart';
@@ -41,9 +42,12 @@ class AddHistoryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DView.appBarLeft('Tambah Baru'),
+      appBar: AppBar(
+        titleSpacing: 0,
+        title: Text('Tambah Baru', style: regular.copyWith(fontSize: 20.sp)),
+      ),
       body: ListView(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16.w),
         children: [
           const Text(
             'Tanggal',
@@ -83,7 +87,7 @@ class AddHistoryPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          DView.spaceHeight(4),
+          DView.spaceHeight(4.h),
           Obx(() {
             return DropdownButtonFormField(
               value: cAddHistory.type,
@@ -138,11 +142,11 @@ class AddHistoryPage extends StatelessWidget {
           // divider
           Center(
             child: Container(
-              height: 5,
-              width: 80,
+              height: 5.h,
+              width: 80.w,
               decoration: BoxDecoration(
                 color: AppColor.bg,
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30.r),
               ),
             ),
           ),
@@ -154,11 +158,11 @@ class AddHistoryPage extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          DView.spaceHeight(4),
+          DView.spaceHeight(4.h),
           Container(
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16.w),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               border: Border.all(
                 color: Colors.grey,
               ),
@@ -187,27 +191,29 @@ class AddHistoryPage extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              DView.spaceWidth(8),
-              Obx(() {
-                return Text(
-                  AppFormat.currency(cAddHistory.total.toString()),
-                  style: Theme.of(context).textTheme.headline4!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: AppColor.primary,
-                      ),
-                );
-              })
+              DView.spaceWidth(8.w),
+              Obx(
+                () {
+                  return Text(
+                    AppFormat.currency(cAddHistory.total.toString()),
+                    style: Theme.of(context).textTheme.headline4!.copyWith(
+                          fontWeight: FontWeight.bold,
+                          color: AppColor.primary,
+                        ),
+                  );
+                },
+              )
             ],
           ),
-          DView.spaceHeight(50),
+          DView.spaceHeight(50.h),
           Material(
             color: AppColor.primary,
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(8.r),
             child: InkWell(
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(8.r),
               onTap: () => addHistory(),
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
+                padding: EdgeInsets.symmetric(vertical: 16.h),
                 child: Center(
                   child: Text(
                     "SUBMIT",
