@@ -1,9 +1,12 @@
 import 'package:course_money_record/config/app_color.dart';
+import 'package:course_money_record/config/app_format.dart';
+import 'package:course_money_record/data/model/history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_income_outcome.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class IncomeOutcomePage extends StatefulWidget {
   const IncomeOutcomePage({super.key, required this.type});
@@ -18,6 +21,8 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
   // inisialisasi controller yang diperlukan
   final cInOut = Get.put(CIncomeOutcome());
   final cUser = Get.put(CUser());
+
+  final controllerSearch = TextEditingController();
 
   // function refresh
   refresh() {
@@ -45,7 +50,20 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                 height: 40,
                 margin: const EdgeInsets.all(16),
                 child: TextField(
-                  onTap: () {},
+                  controller: controllerSearch,
+                  onTap: () async {
+                    DateTime? result = await showDatePicker(
+                      context: context,
+                      initialDate: DateTime.now(),
+                      firstDate: DateTime(2023, 01, 01),
+                      lastDate: DateTime(DateTime.now().year + 1),
+                    );
+                    // cek ada atu tidak tanggal yng dipilih
+                    if (result != null) {
+                      controllerSearch.text =
+                          DateFormat('yyyy-MM-dd').format(result);
+                    }
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
@@ -54,7 +72,13 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                     filled: true,
                     fillColor: AppColor.chart.withOpacity(0.5),
                     suffixIcon: IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        cInOut.search(
+                          cUser.data.idUser,
+                          widget.type,
+                          controllerSearch.text,
+                        );
+                      },
                       icon: const Icon(
                         Icons.search,
                         color: Colors.white,
@@ -80,49 +104,60 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
       ),
 
       // body
-      body: RefreshIndicator(
-        onRefresh: () async => refresh(),
-        child: ListView.builder(
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return Card(
-              elevation: 4,
-              margin: EdgeInsets.fromLTRB(
-                  16, index == 0 ? 16 : 8, 16, index == 9 ? 16 : 8),
-              child: Row(
-                children: [
-                  DView.spaceWidth(),
-                  Text(
-                    "14 Jan 2023",
-                    style: TextStyle(
-                      color: AppColor.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  Expanded(
-                    child: Text(
-                      "Rp. 200.000,00",
-                      style: TextStyle(
+      body: GetBuilder<CIncomeOutcome>(builder: (_) {
+        // jika sedang loading
+        if (_.loading) return DView.loadingCircle();
+
+        // jika tidak ada data
+        if (_.list.isEmpty) return DView.empty('Tidak ada data');
+
+        return RefreshIndicator(
+          onRefresh: () async => refresh(),
+          child: ListView.builder(
+            itemCount: _.list.length,
+            itemBuilder: (context, index) {
+              // buat objek history
+              History history = _.list[index];
+
+              return Card(
+                elevation: 4,
+                margin: EdgeInsets.fromLTRB(
+                    16, index == 0 ? 16 : 8, 16, index == 9 ? 16 : 8),
+                child: Row(
+                  children: [
+                    DView.spaceWidth(),
+                    Text(
+                      AppFormat.date(history.date!),
+                      style: const TextStyle(
                         color: AppColor.primary,
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
                       ),
-                      textAlign: TextAlign.end,
                     ),
-                  ),
+                    Expanded(
+                      child: Text(
+                        AppFormat.currency(history.total!),
+                        style: const TextStyle(
+                          color: AppColor.primary,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                        textAlign: TextAlign.end,
+                      ),
+                    ),
 
-                  // popup button
-                  PopupMenuButton(
-                    itemBuilder: (context) => [],
-                    onSelected: (value) {},
-                  )
-                ],
-              ),
-            );
-          },
-        ),
-      ),
+                    // popup button
+                    PopupMenuButton(
+                      itemBuilder: (context) => [],
+                      onSelected: (value) {},
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        );
+      }),
     );
   }
 }
