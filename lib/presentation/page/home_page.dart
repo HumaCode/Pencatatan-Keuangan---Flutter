@@ -324,7 +324,7 @@ class _HomePageState extends State<HomePage> {
               Center(
                 child: Obx(() {
                   return Text(
-                    "${cHome.persentIncome}%",
+                    "${cHome.percentIncome}%",
                     style: Theme.of(context).textTheme.headline4!.copyWith(
                           color: AppColor.primary,
                         ),
