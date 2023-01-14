@@ -6,6 +6,7 @@ import 'package:course_money_record/presentation/controller/c_home.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/page/auth/login_page.dart';
 import 'package:course_money_record/presentation/page/history/add_history_page.dart';
+import 'package:course_money_record/presentation/page/history/history_page.dart';
 import 'package:course_money_record/presentation/page/history/income_outcome_page.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:d_view/d_view.dart';
@@ -270,7 +271,9 @@ class _HomePageState extends State<HomePage> {
           ),
           const Divider(height: 1),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              Get.to(() => const HistoryPage());
+            },
             leading: const Icon(Icons.history),
             horizontalTitleGap: 0,
             title: const Text("Riwayat"),

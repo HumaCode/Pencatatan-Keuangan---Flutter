@@ -173,6 +173,51 @@ class SourceHistory {
     return [];
   }
 
+  // function history
+  static Future<List<History>> history(String idUser) async {
+    // url
+    String url = '${Api.history}/history.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return [];
+
+    // cek jika responya success
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
+
+    return [];
+  }
+
+  // function history search
+  static Future<List<History>> historySearch(String idUser, String date) async {
+    // url
+    String url = '${Api.history}/history_search.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'date': date,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return [];
+
+    // cek jika responya success
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
+
+    return [];
+  }
+
   // function wheredate
   static Future<History?> whereDate(String idUser, String date) async {
     // url
