@@ -456,8 +456,10 @@ class _HomePageState extends State<HomePage> {
           GestureDetector(
             onTap: () {
               Get.to(() => DetailHistoryPage(
-                  idUser: cUser.data.idUser!,
-                  date: DateFormat('yyyy-MM-dd').format(DateTime.now())));
+                    idUser: cUser.data.idUser!,
+                    date: DateFormat('yyyy-MM-dd').format(DateTime.now()),
+                    type: 'Pengeluaran',
+                  ));
             },
             child: Container(
               margin: const EdgeInsets.fromLTRB(16, 0, 0, 16),

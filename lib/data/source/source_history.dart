@@ -240,4 +240,29 @@ class SourceHistory {
 
     return null;
   }
+
+  // function detail history
+  static Future<History?> detail(
+      String idUser, String date, String type) async {
+    // url
+    String url = '${Api.history}/detail.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'date': date,
+      'type': type,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return null;
+
+    // cek jika responya success
+    if (responseBody['success']) {
+      var e = responseBody['data'];
+      return History.fromJson(e);
+    }
+
+    return null;
+  }
 }

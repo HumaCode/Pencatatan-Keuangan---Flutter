@@ -154,7 +154,10 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                 child: InkWell(
                   onTap: () {
                     Get.to(() => DetailHistoryPage(
-                        idUser: cUser.data.idUser!, date: history.date!));
+                          idUser: cUser.data.idUser!,
+                          date: history.date!,
+                          type: history.type!,
+                        ));
                   },
                   borderRadius: BorderRadius.circular(4),
                   child: Row(

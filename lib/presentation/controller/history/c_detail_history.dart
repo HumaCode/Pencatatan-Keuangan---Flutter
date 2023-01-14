@@ -9,8 +9,8 @@ class CDetailHistory extends GetxController {
   History get data => _data.value;
 
   // initial data update history
-  getData(idUser, date) async {
-    History? history = await SourceHistory.whereDate(idUser, date);
+  getData(idUser, date, type) async {
+    History? history = await SourceHistory.detail(idUser, date, type);
     _data.value = history ?? History();
     update();
   }
