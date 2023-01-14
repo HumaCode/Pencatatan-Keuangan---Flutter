@@ -1,9 +1,11 @@
 import 'package:course_money_record/config/app_color.dart';
 import 'package:course_money_record/config/app_format.dart';
 import 'package:course_money_record/data/model/history.dart';
+import 'package:course_money_record/data/source/source_history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_income_outcome.dart';
 import 'package:course_money_record/presentation/page/history/update_history_page.dart';
+import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +34,7 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
   }
 
   // function show menu
-  menuOption(String value, History history) {
+  menuOption(String value, History history) async {
     if (value == 'update') {
       Get.to(() => UpdateHistoryPage(
           date: history.date!, idHistory: history.idHistory!))?.then((value) {
@@ -40,7 +42,18 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
           refresh();
         }
       });
-    } else if (value == 'delete') {}
+    } else if (value == 'delete') {
+      bool? yes = await DInfo.dialogConfirmation(
+          context, 'Konfirmasi', 'Apakah anda yakin akan menghapus data ini..?',
+          textNo: 'Batal', textYes: 'Hapus data');
+
+      if (yes!) {
+        bool success = await SourceHistory.delete(history.idHistory!);
+
+        // jika success, maka akan di refresh
+        if (success) refresh();
+      }
+    }
   }
 
   @override

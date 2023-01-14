@@ -110,6 +110,21 @@ class SourceHistory {
     return responseBody['success'];
   }
 
+  // function delete history
+  static Future<bool> delete(String idHistory) async {
+    // url
+    String url = '${Api.history}/delete.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_history': idHistory,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return false;
+    return responseBody['success'];
+  }
+
   // function income outcome
   static Future<List<History>> incomeOutcome(String idUser, String type) async {
     // url
