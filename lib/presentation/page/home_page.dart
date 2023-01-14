@@ -6,12 +6,14 @@ import 'package:course_money_record/presentation/controller/c_home.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/page/auth/login_page.dart';
 import 'package:course_money_record/presentation/page/history/add_history_page.dart';
+import 'package:course_money_record/presentation/page/history/detail_history_page.dart';
 import 'package:course_money_record/presentation/page/history/history_page.dart';
 import 'package:course_money_record/presentation/page/history/income_outcome_page.dart';
 import 'package:d_chart/d_chart.dart';
 import 'package:d_view/d_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -451,28 +453,35 @@ class _HomePageState extends State<HomePage> {
               );
             }),
           ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(16, 0, 0, 16),
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(8),
-                bottomLeft: Radius.circular(8),
-              ),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: const [
-                Text(
-                  "Selengkapnya",
-                  style: TextStyle(color: AppColor.primary),
+          GestureDetector(
+            onTap: () {
+              Get.to(() => DetailHistoryPage(
+                  idUser: cUser.data.idUser!,
+                  date: DateFormat('yyyy-MM-dd').format(DateTime.now())));
+            },
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(16, 0, 0, 16),
+              padding: const EdgeInsets.symmetric(vertical: 6),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  bottomLeft: Radius.circular(8),
                 ),
-                Icon(
-                  Icons.navigate_next,
-                  color: AppColor.primary,
-                )
-              ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Text(
+                    "Selengkapnya",
+                    style: TextStyle(color: AppColor.primary),
+                  ),
+                  Icon(
+                    Icons.navigate_next,
+                    color: AppColor.primary,
+                  )
+                ],
+              ),
             ),
           ),
         ],

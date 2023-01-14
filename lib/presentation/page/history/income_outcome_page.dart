@@ -4,6 +4,7 @@ import 'package:course_money_record/data/model/history.dart';
 import 'package:course_money_record/data/source/source_history.dart';
 import 'package:course_money_record/presentation/controller/c_user.dart';
 import 'package:course_money_record/presentation/controller/history/c_income_outcome.dart';
+import 'package:course_money_record/presentation/page/history/detail_history_page.dart';
 import 'package:course_money_record/presentation/page/history/update_history_page.dart';
 import 'package:d_info/d_info.dart';
 import 'package:d_view/d_view.dart';
@@ -150,38 +151,45 @@ class _IncomeOutcomePageState extends State<IncomeOutcomePage> {
                 elevation: 4,
                 margin: EdgeInsets.fromLTRB(16, index == 0 ? 16 : 8, 16,
                     index == _.list.length - 1 ? 16 : 8),
-                child: Row(
-                  children: [
-                    DView.spaceWidth(),
-                    Text(
-                      AppFormat.date(history.date!),
-                      style: const TextStyle(
-                        color: AppColor.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        AppFormat.currency(history.total!),
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => DetailHistoryPage(
+                        idUser: cUser.data.idUser!, date: history.date!));
+                  },
+                  borderRadius: BorderRadius.circular(4),
+                  child: Row(
+                    children: [
+                      DView.spaceWidth(),
+                      Text(
+                        AppFormat.date(history.date!),
                         style: const TextStyle(
                           color: AppColor.primary,
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
                         ),
-                        textAlign: TextAlign.end,
                       ),
-                    ),
+                      Expanded(
+                        child: Text(
+                          AppFormat.currency(history.total!),
+                          style: const TextStyle(
+                            color: AppColor.primary,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),
 
-                    // popup button
-                    PopupMenuButton<String>(
-                      itemBuilder: (context) => const [
-                        PopupMenuItem(value: "update", child: Text("Update")),
-                        PopupMenuItem(value: "delete", child: Text("Delete")),
-                      ],
-                      onSelected: (value) => menuOption(value, history),
-                    )
-                  ],
+                      // popup button
+                      PopupMenuButton<String>(
+                        itemBuilder: (context) => const [
+                          PopupMenuItem(value: "update", child: Text("Update")),
+                          PopupMenuItem(value: "delete", child: Text("Delete")),
+                        ],
+                        onSelected: (value) => menuOption(value, history),
+                      )
+                    ],
+                  ),
                 ),
               );
             },
