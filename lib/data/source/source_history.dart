@@ -1,5 +1,6 @@
 import 'package:course_money_record/config/api.dart';
 import 'package:course_money_record/config/api_request.dart';
+import 'package:course_money_record/data/model/history.dart';
 import 'package:d_info/d_info.dart';
 import 'package:intl/intl.dart';
 
@@ -68,5 +69,28 @@ class SourceHistory {
     }
 
     return responseBody['success'];
+  }
+
+  // function income outcome
+  static Future<List<History>> incomeOutcome(String idUser, String type) async {
+    // url
+    String url = '${Api.history}/income_outcome.php';
+
+    // panggil request post, dibuat dalam bentuk map
+    Map? responseBody = await AppRequest.post(url, {
+      'id_user': idUser,
+      'type': type,
+    });
+
+    // jika responseBody null
+    if (responseBody == null) return [];
+
+    // cek jika responya success
+    if (responseBody['success']) {
+      List list = responseBody['data'];
+      return list.map((e) => History.fromJson(e)).toList();
+    }
+
+    return [];
   }
 }
